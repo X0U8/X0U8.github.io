@@ -1,0 +1,30 @@
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Room {
+  id        String    @id @default(cuid())
+  code      String    @unique
+  createdAt DateTime  @default(now())
+  messages  Message[]
+}
+
+model Message {
+  id            String   @id @default(cuid())
+  content       String
+  userName      String
+  isAI          Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  roomId        String
+  room          Room     @relation(fields: [roomId], references: [id])
+  replyToId     String?
+  replyTo       Message? @relation("MessageReplies", fields: [replyToId], references: [id], onDelete: SetNull)
+  repliedBy     Message[] @relation("MessageReplies")
+}
