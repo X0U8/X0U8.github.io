@@ -1,6 +1,6 @@
 #Soham's Template
 
-This is a Codev template project that includes:
+This is a X0U8 template project that includes:
 
 1. Next.js with Pages Router
 2. Tailwind CSS Framework
